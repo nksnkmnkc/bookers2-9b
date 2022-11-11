@@ -15,10 +15,10 @@
 
       <!--一週間の投稿数-->
       <!--過去７日分それぞれの投稿数を一覧表示する(グラフ）-->
-      <%= render 'week_index',books: @books %>
+      <%= render 'book_index',books: @books %>
 
-      <!--日別投稿数表示-->
-      <%= form_with url: user_search_path(@user), method: :get do |f| %>
+      <!--日付別投稿数表示-->
+      <%= form_with url: user_search_path(@user), method: :get, local: false do |f| %>
       <%= f.date_field :created_at %>　<!--①-->
       <%= f.submit '検索', class: 'btn btn-primary'  %>
       <% end %>
@@ -31,6 +31,12 @@
 
       <!--①このフィールドで年/月/日が表示されます
       ②これでjsファイルを呼び出す。-->
+      <!--form_withで、JavaScriptのAjaxという技術を使用した非同期通信を行なうためには
+      local: falseというオプションを記述する必要がある。
+      localオプションは、「同期処理にするかどうか」という設定を行うオプション。
+      「非同期」の処理となるので、local: false(オフ)という設定になる。
+      form_withを使用する際に何も書かないと、自動的に同期処理になるが、local: trueという初期設定になっている状態、と言い換えることができる。
+      同期通信は、HTML形式でリクエストを送っていて、非同期通信は、JavaScript形式でリクエストを送っている。-->
 
     </div>
 

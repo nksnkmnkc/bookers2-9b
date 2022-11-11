@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, only:[:index,:show,:edit,:update] do
-  #指定した日の記録（投稿数）を非同期で検索する
+  #日付別投稿数表示
     get 'search' => 'users#search'
     resource :relationships, only:[:create, :destroy]
     get 'followings' => 'relationships#followings', as: 'followings'
