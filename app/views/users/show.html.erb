@@ -12,9 +12,26 @@
     <div class="col-md-8 offset-md-1">
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+
       <!--一週間の投稿数-->
       <!--過去７日分それぞれの投稿数を一覧表示する(グラフ）-->
       <%= render 'week_index',books: @books %>
+
+      <!--日別投稿数表示-->
+      <%= form_with url: user_search_path(@user), method: :get do |f| %>
+      <%= f.date_field :created_at %>　<!--①-->
+      <%= f.submit '検索', class: 'btn btn-primary'  %>
+      <% end %>
+
+      <div id="search_result"> <!--②-->
+        <% if @search_book.present? %>
+        <%= render 'search', search_book: @search_book %>
+        <% end %>
+      </div>
+
+      <!--①このフィールドで年/月/日が表示されます
+      ②これでjsファイルを呼び出す。-->
+
     </div>
 
   </div>

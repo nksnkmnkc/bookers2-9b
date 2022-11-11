@@ -33,6 +33,29 @@ class UsersController < ApplicationController
     end
   end
 
+ #日別投稿数表示
+  #① rails routesより、、、
+  #Controller#Action => users#search_form
+  #Prefix => user_search_form ,Verb => GET
+  #URI Pattern => /users/:user_id/search_form(.:format)
+  #となっているので、(params[:user_id])が必要
+  
+  #②if文で分岐させて空欄なら日付を選択するように表示します
+  #③.countメソッドで検索してヒットした本を投稿した日付の投稿数を@search_bookで定義します。
+  
+  def search
+    @user = User.find(params[:user_id])#①
+    @books = @user.books
+    @book = Book.new
+    if params[:created_at] == ""
+      @search_book = "日付を選択してください"#②
+    else
+      create_at = params[:created_at]
+      @search_book = @books.where(['created_at LIKE ? ', "#{create_at}%"]).count#③
+    end
+  end
+
+
   private
 
   def user_params
