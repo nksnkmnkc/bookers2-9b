@@ -13,54 +13,8 @@
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
       <!--一週間の投稿数-->
-      <%= render 'week_post',books: @books %>
       <!--過去７日分それぞれの投稿数を一覧表示する(グラフ）-->
-       <canvas id="myLineChart"></canvas>
-          <script>
-            //初回読み込み、リロード、ページ切り替えで動く。
-            $(document).ready( function() {
-              const ctx = document.getElementById("myLineChart");
-              const myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                  labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
-                  datasets: [
-                    {
-                      label: '７日間分の投稿数',
-                      data: [
-                        <%= @books.created_six_day_ago.count %>,
-                        <%= @books.created_five_day_ago.count %>,
-                        <%= @books.created_four_day_ago.count %>,
-                        <%= @books.created_three_day_ago.count %>,
-                        <%= @books.created_two_day_ago.count %>,
-                        <%= @books.created_yesterday.count %>,
-                        <%= @books.created_today.count %>
-                      ],
-                      borderColor: "rgba(0,0,255,1)",
-                      backgroundColor: "rgba(0,0,0,0)",
-                      tension: 0.4
-                    }
-                  ],
-                },
-                options: {
-                  title: {
-                    display: true,
-                    text: '7日間の投稿数の比較'
-                  },
-                  responsive: true,
-                  scales: {
-                    y:{
-                      suggestedMin: 0,
-                      suggestedMax: 10
-                    },
-                    x:{
-                      stacked: true
-                    },
-                  },
-                }
-              });
-            });
-          </script>
+      <%= render 'week_index',books: @books %>
     </div>
 
   </div>
